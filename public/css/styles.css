@@ -4,3 +4,263 @@
 *:after {
   box-sizing: border-box;
 }
+
+/* Site Defaults */
+:root {
+  --primary-color-one: #4FC3F7;
+  --primary-color-two: #6C3FC5;
+  --secondary-color-one: #FFFFFF;
+  --secondary-color-two: #111111;
+}
+
+body {
+  font-family: 'Michroma', sans-serif;
+  font-size: 0.75rem;
+}
+
+/* Header */
+#top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.75rem 0;
+}
+
+.siteName a {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary-color-two);
+  text-align: center;
+  text-decoration: none;
+}
+
+#tools {
+  font-size: 0.75rem;
+  margin-left: auto;
+}
+
+#tools a {
+  color: var(--primary-color-two);
+  text-align: right;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Navigation */
+nav {
+  background: var(--primary-color-two);
+  margin: 0;
+  padding: 0.5rem 0;
+  box-sizing: border-box;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 0.5rem;
+  font-weight: 600;
+  color: var(--secondary-color-one);
+  cursor: pointer;
+}
+
+/* Home Page */
+.hero-container {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 1.5rem auto;
+}
+
+.hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 50%;
+  font-size: 0.65rem;
+  color: var(--primary-color-two);
+}
+
+.hero-overlay h2,
+.hero-overlay p {
+  margin: 0 0 0.5rem 0;
+}
+
+.hero-overlay img {
+  margin-top: 0.5rem;
+  width: 120px;
+  height: auto;
+}
+
+.delorean-reviews ul {
+  text-align: left;
+  margin-left: 0;
+  padding-left: 1.2rem;
+}
+
+.delorean-reviews li {
+  padding-bottom: 0.5rem;
+}
+
+.upgrade-options-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.upgrade-option-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.upgrade-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-color-one);
+  border: 2px solid var(--primary-color-two);
+  width: 100%;
+  height: 180px;
+  box-sizing: border-box;
+  padding: 1rem;
+}
+
+.upgrade-option img {
+  width: 100px;
+  height: auto;
+}
+
+.upgrade-option-group a {
+  text-align: center;
+  margin: 0.25rem 0 1rem 0;
+}
+
+.main-sections {
+  display: block;
+}
+
+/* Footer */
+footer {
+  font-size: 0.65rem;
+}
+
+/* Bigger Screens */
+@media (min-width: 800px) {
+  body {
+    font-size: 0.85rem;
+    background-image: url("/images/site/small_check.jpg");
+    background-size: cover;
+    background-repeat: repeat;
+  }
+
+  #wrapper {
+    width: 90%;
+    background-color: var(--secondary-color-one);
+    border: 5px solid var(--primary-color-one);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #top-header {
+    margin: 0 0 2rem 0;
+  }
+
+  .siteName a {
+    font-size: 2rem;
+    font-weight: 900;
+  }
+
+  #tools {
+    font-size: 1rem;
+  }
+
+  nav ul li {
+    font-size: 1.25rem;
+    font-weight: 900;
+  }
+
+  .hero-overlay {
+    font-size: 1rem;
+  }
+
+  .hero-overlay img {
+    padding-top: 15px;
+    width: 180px;
+  }
+
+  .upgrade-options-row {
+    justify-content: space-around;
+    gap: 2rem;
+  }
+
+  .upgrade-option {
+    height: 150px;
+  }
+
+  .main-sections {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+    align-items: flex-start;
+    justify-content: space-between;
+    font-size: 1.25rem;
+    width: 100%;
+  }
+
+  .main-sections h3 {
+    padding-bottom: 1rem;
+    font-weight: 900;
+  }
+
+  .delorean-upgrades {
+    order: 1;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .delorean-reviews {
+    order: 2;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .delorean-reviews li {
+    padding-bottom: 2rem;
+  }
+
+  /* Footer */
+  footer {
+    font-size: 0.95rem;
+    margin: 2rem 0 0 0;
+  }
+
+  footer p {
+    margin: 0;
+  }
+}
