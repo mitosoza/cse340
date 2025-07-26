@@ -11,6 +11,9 @@
   --primary-color-two: #6C3FC5;
   --secondary-color-one: #FFFFFF;
   --secondary-color-two: #111111;
+  --secondary-color-three: #F0F0F0;
+  --secondary-color-four: #E0E0E0;
+  --secondary-color-five: #CCCCCC;
 }
 
 body {
@@ -71,6 +74,12 @@ nav ul li {
   font-weight: 600;
   color: var(--secondary-color-one);
   cursor: pointer;
+}
+
+nav ul li a {
+  color: var(--secondary-color-one);
+  text-decoration: none;
+  font-size: 0.95rem;
 }
 
 /* Home Page */
@@ -161,6 +170,31 @@ nav ul li {
 
 .main-sections {
   display: block;
+}
+
+/* Inventory View */
+#inv-display {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 1rem;
+}
+
+#inv-display li {
+  border: 1px solid var(--secondary-color-five);
+  padding: 1rem;
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+#inv-display li a {
+  font-size: 1rem;
+  text-decoration: none;
 }
 
 /* Footer */
@@ -258,6 +292,18 @@ footer {
   footer {
     font-size: 0.95rem;
     margin: 2rem 0 0 0;
+  }
+
+  /* Inventory View */
+  #inv-display {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  #inv-display li {
+    flex: 1 1 calc(33.333% - 1rem);
+    max-width: 300px;
   }
 
   footer p {
