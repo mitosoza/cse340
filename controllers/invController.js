@@ -17,6 +17,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
       title: className + " vehicles",
       nav,
       grid,
+      errors: null
     })
   } catch (error) {
     error.message = "Sorry, there was an error processing your request."
@@ -38,6 +39,7 @@ invCont.buildByInventoryId = async function (req, res, next) {
       title: vehicleName,
       nav,
       details,
+      errors: null
     })
   } catch (error) {
     error.message = "Sorry, there was an error processing your request."

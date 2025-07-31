@@ -212,6 +212,51 @@ nav ul li a {
   padding-bottom: 3rem;
 }
 
+/* Login and Register Forms */
+.notice {
+  color: red
+}
+
+#registerForm,
+#loginForm {
+  display: block;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: var(--primary-color-one);
+}
+
+form label,
+form input,
+form span,
+form button {
+  display: block;
+  width: 92%;
+  margin: 0.35rem 1rem;
+}
+
+form input {
+  margin-bottom: 0.85rem;
+  padding: 0.75rem;
+}
+
+form button {
+  margin: 1rem auto 0 auto;
+  padding: 0.75rem;
+  width: 50%;
+  font-family: 'Michroma', sans-serif;
+  font-size: 1rem;
+}
+
+.password-help {
+  font-size: 0.65rem;
+}
+
+.no-account {
+  margin: 1rem auto;
+  padding-left: 2px;
+}
+
 /* Footer */
 footer {
   font-size: 0.6rem;
@@ -334,6 +379,31 @@ footer {
   #inv-display li {
     flex: 1 1 calc(33.333% - 1rem);
     max-width: 300px;
+  }
+
+  /* Login and Register Forms */
+  #registerForm,
+  #loginForm {
+    width: 50%;
+    margin: 0 auto;
+  }
+
+  form label,
+  form input,
+  form span,
+  form button {
+    display: block;
+    width: 90%;
+    margin: 0.35rem 2rem;
+  }
+
+  form input {
+    margin-bottom: 1rem;
+  }
+
+  form button {
+    margin: 2rem auto 1rem auto;
+    width: 50%;
   }
 
   /* Footer */
