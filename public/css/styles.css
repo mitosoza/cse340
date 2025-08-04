@@ -14,6 +14,8 @@
   --secondary-color-three: #F0F0F0;
   --secondary-color-four: #E0E0E0;
   --secondary-color-five: #CCCCCC;
+  --form-valid-color: #9AE2A3;
+  --form-invalid-color: #e6c1c4;
 }
 
 body {
@@ -212,13 +214,15 @@ nav ul li a {
   padding-bottom: 3rem;
 }
 
-/* Login and Register Forms */
+/* Forms */
 .notice {
   color: red
 }
 
 #registerForm,
-#loginForm {
+#loginForm,
+#newClassificationForm,
+#newVehicleForm {
   display: block;
   gap: 0.5rem;
   margin: 1rem 0;
@@ -229,15 +233,24 @@ nav ul li a {
 form label,
 form input,
 form span,
+form select,
+form textarea,
 form button {
   display: block;
   width: 92%;
   margin: 0.35rem 1rem;
 }
 
-form input {
+form input,
+form select {
   margin-bottom: 0.85rem;
   padding: 0.75rem;
+}
+
+form textarea {
+  margin-bottom: 0.85rem;
+  padding: 0.75rem;
+  height: 100px;
 }
 
 form button {
@@ -246,6 +259,35 @@ form button {
   width: 50%;
   font-family: 'Michroma', sans-serif;
   font-size: 1rem;
+}
+
+input:focus:invalid,
+textarea:focus:invalid,
+select:focus:invalid {
+ background-color: var(--form-invalid-color);
+}
+
+input:focus:valid,
+textarea:focus:valid,
+select:focus:valid {
+ background-color: var(--form-valid-color);
+}
+
+input:-webkit-autofill:valid,
+input:-webkit-autofill:invalid {
+  -webkit-box-shadow: 0 0 0 1000px var(--form-valid-color) inset;
+}
+
+input:-webkit-autofill:invalid {
+  -webkit-box-shadow: 0 0 0 1000px var(--form-invalid-color) inset;
+}
+
+input:autofill:valid {
+  background-color: var(--form-valid-color);
+}
+
+input:autofill:invalid {
+  background-color: var(--form-invalid-color);
 }
 
 .password-help {
@@ -381,9 +423,11 @@ footer {
     max-width: 300px;
   }
 
-  /* Login and Register Forms */
+  /* Forms */
   #registerForm,
-  #loginForm {
+  #loginForm,
+  #newClassificationForm,
+  #newVehicleForm {
     width: 50%;
     margin: 0 auto;
   }
@@ -391,13 +435,17 @@ footer {
   form label,
   form input,
   form span,
+  form select,
+  form textarea,
   form button {
     display: block;
     width: 90%;
     margin: 0.35rem 2rem;
   }
 
-  form input {
+  form input,
+  form select,
+  form textarea {
     margin-bottom: 1rem;
   }
 
