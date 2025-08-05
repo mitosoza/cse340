@@ -1,5 +1,7 @@
 const invModel = require("../models/inventory-model")
 const Util = {}
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 /* ************************
  * Constructs the nav HTML unordered list
@@ -79,6 +81,59 @@ Util.buildVehicleDetails = async function (vehicle) {
     detail += '<p class="notice">Sorry, no matching vehicle could be found.</p>'
   }
   return detail
+}
+
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+Util.checkJWTToken = (req, res, next) => {
+  if (req.cookies.jwt) {
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          req.flash("Please log in")
+          res.clearCookie("jwt")
+          return res.redirect("/account/login")
+        }
+        res.locals.accountData = accountData
+        res.locals.loggedin = 1
+        next()
+      })
+  } else {
+    next()
+  }
+}
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+}
+
+/* ****************************************
+ *  Create a classification Select List
+ * ************************************ */
+Util.buildClassificationList = async function (selectedId) {
+  const classifications = await invModel.getAllClassifications()
+  let selectList = '<select id="classificationList" name="classification_id">'
+  selectList += '<option value="">Choose a Classification</option>'
+  classifications.forEach(classification => {
+    selectList += '<option value="' + classification.classification_id + '"'
+    if (parseInt(classification.classification_id) === parseInt(selectedId)) {
+      selectList += ' selected'
+    }
+    selectList += '>' + classification.classification_name + '</option>'
+  })
+  selectList += '</select>'
+  return selectList
 }
 
 module.exports = Util

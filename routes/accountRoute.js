@@ -24,9 +24,10 @@ router.post(
   "/login",
   regValidate.loginRules(),
   regValidate.checkLoginData,
-  (req, res) => {
-    res.status(200).send('login process')
-  }
+  accountController.accountLogin
 )
+
+// Route to build Account Management view
+router.get("/", utilities.checkLogin, accountController.buildAccountManagement)
 
 module.exports = router;

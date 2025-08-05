@@ -14,7 +14,7 @@
  </ul>
 <% } %>
 
-<form id="newVehicleForm" action="/inv/add-vehicle" method="post">
+<form id="editVehicleForm" action="/inv/update" method="post">
   <fieldset>
     <legend>All Fields are required.</legend>
     <label for="classificationId">Classification:</label>
@@ -47,5 +47,8 @@
     <label for="invColor">Color:</label>
     <input type="text" id="invColor" name="inv_color" value="<%= locals.inv_color %>" required>
   </fieldset>
-  <button type="submit">Add Vehicle</button>
+  <button type="submit">Update Vehicle</button>
+  <input type="hidden" name="inv_id"
+  <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+  <% } %>>
 </form>

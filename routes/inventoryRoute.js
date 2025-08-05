@@ -26,11 +26,24 @@ router.post(
 // Route to add a new vehicle
 router.get("/add-vehicle", invController.buildAddVehicle);
 
-// Route to handle vehicle form submission
+// Route to handle new vehicle form submission
 router.post(
   "/add-vehicle",
   regValidate.vehicleRules(),
   regValidate.checkVehicleData,
   invController.addVehicle);
+
+// Route display the inventory by classification
+router.get("/getInventory/:classification_id", invController.getInventoryJSON)
+
+// Route to edit a vehicle
+router.get("/edit/:inv_id", invController.buildEditVehicle);
+
+// Route to handle vehicle update
+router.post(
+  "/update/",
+  regValidate.vehicleRules(),
+  regValidate.checkUpdateData,
+  invController.updateVehicle);
 
 module.exports = router;
