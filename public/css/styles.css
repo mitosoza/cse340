@@ -239,7 +239,8 @@ nav ul li a {
 #loginForm,
 #newClassificationForm,
 #newVehicleForm,
-#editVehicleForm {
+#editVehicleForm,
+#deleteVehicleForm {
   display: block;
   gap: 0.5rem;
   margin: 1rem 0;
@@ -445,7 +446,8 @@ footer {
   #loginForm,
   #newClassificationForm,
   #newVehicleForm,
-  #editVehicleForm {
+  #editVehicleForm,
+  #deleteVehicleForm {
     width: 50%;
     margin: 0 auto;
   }

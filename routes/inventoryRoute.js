@@ -46,4 +46,10 @@ router.post(
   regValidate.checkUpdateData,
   invController.updateVehicle);
 
+// Route to delete a vehicle
+router.get("/delete/:inv_id", invController.buildDeleteVehicle);
+
+// Route to handle vehicle deletion
+router.post("/delete/", invController.deleteVehicle);
+
 module.exports = router;
