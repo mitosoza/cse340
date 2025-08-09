@@ -107,6 +107,20 @@ Util.checkJWTToken = (req, res, next) => {
 }
 
 /* ****************************************
+ * Middleware to check account type for inventory management
+ **************************************** */
+Util.checkAccountType = (req, res, next) => {
+  if (res.locals.accountData &&
+    (res.locals.accountData.account_type === "Employee" ||
+      res.locals.accountData.account_type === "Admin")) {
+    next()
+  } else {
+    req.flash("notice", "Access Denied - Please log in with appropriate privileges.")
+    return res.redirect("/account/login")
+  }
+}
+
+/* ****************************************
  *  Check Login
  * ************************************ */
 Util.checkLogin = (req, res, next) => {

@@ -130,4 +130,122 @@ async function buildAccountManagement(req, res) {
   })
 }
 
-module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement}
+/* ***************************
+ *  Build Update Account view
+ * ************************** */
+async function buildUpdateAccount(req, res, next) {
+  const account_id = parseInt(req.params.account_id)
+  let nav = await utilities.getNav()
+  const accountData = await accountModel.getAccountDataById(account_id)
+  if (!accountData) {
+    req.flash("message notice", "No account found.")
+    res.status(400).render("account/accountManagement", {
+      title: "Account Management",
+      nav,
+      errors: null,
+    })
+  }
+  else {
+    res.render("account/updateAccount", {
+      title: "Edit Account",
+      nav,
+      errors: null,
+      account_id: accountData.account_id,
+      account_firstname: accountData.account_firstname,
+      account_lastname: accountData.account_lastname,
+      account_email: accountData.account_email
+    })
+  }
+}
+
+/* ***************************
+ *  Process Account Update
+ * ************************** */
+async function updateAccount(req, res) {
+  let nav = await utilities.getNav()
+  const { account_id, account_firstname, account_lastname, account_email } = req.body
+
+  const updatedResult = await accountModel.updateAccount(
+    account_id,
+    account_firstname,
+    account_lastname,
+    account_email
+  )
+
+  if (updatedResult) {
+    req.flash("notice", "Congratulations! your information has been updated.")
+    res.status(201).render("account/accountManagement", {
+      title: "Account Management",
+      nav,
+      errors: null,
+    })
+  }
+  else {
+    req.flash("notice", "Sorry, the account update failed.")
+    res.status(400).render("account/updateAccount", {
+      title: "Edit Account",
+      nav,
+      errors: null,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email
+    })
+  }
+}
+
+/* ***************************
+ *  Process Password Update
+ * ************************** */
+async function updatePassword(req, res) {
+  let nav = await utilities.getNav()
+  const { account_id, account_firstname, account_lastname, account_email, account_password } = req.body
+
+  // Hash the password before storing
+  let hashedPassword
+  try {
+     // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
+  } catch (error) {
+    req.flash("notice", 'Sorry, there was an error processing the password update.')
+    res.status(500).render("account/updateAccount", {
+      title: "Edit Account",
+      nav,
+      errors: null,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email
+    })
+  }
+
+  const updatePasswordResult = await accountModel.updatePassword(
+    account_id,
+    hashedPassword
+  )
+
+  if (updatePasswordResult) {
+    req.flash(
+      "notice",
+      "Password updated successfully."
+    )
+    res.status(201).render("account/accountManagement", {
+      title: "Account Management",
+      nav,
+      errors: null,
+    })
+  } else {
+    req.flash("notice", 'Sorry, there was an error processing the password update.')
+    res.status(500).render("account/updateAccount", {
+      title: "Edit Account",
+      nav,
+      errors: null,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email
+    })
+  }
+}
+
+module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement, buildUpdateAccount, updateAccount, updatePassword}

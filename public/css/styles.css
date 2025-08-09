@@ -452,6 +452,14 @@ footer {
     margin: 0 auto;
   }
 
+  #updateAccountForm,
+  #updatePasswordForm {
+    width: 50%;
+    min-width: 550px;
+    margin-left: 1rem;
+    margin-bottom: 3rem;
+  }
+
   form label,
   form input,
   form span,
