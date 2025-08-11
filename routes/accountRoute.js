@@ -55,4 +55,31 @@ router.post(
   accountController.updatePassword
 )
 
+// Route to build Users Administration view
+router.get("/users/:account_id", utilities.checkLogin, utilities.checkIsAdmin, accountController.buildUsersAdmin)
+
+// Route to build Users Administration Edit view
+router.get("/users/edit/:account_id", utilities.checkLogin, utilities.checkIsAdmin, accountController.buildUsersAdminEdit)
+
+// Route to handle user account edit form submission
+router.post(
+  "/users/editUserAccount",
+  utilities.checkLogin,
+  utilities.checkIsAdmin,
+  regValidate.updateAccountRules(),
+  regValidate.checkEditUserData,
+  accountController.editUserAccount
+)
+
+// Route to build User Account Delete view
+router.get("/users/delete/:account_id", utilities.checkLogin, utilities.checkIsAdmin, accountController.buildUsersAdminDelete)
+
+// Route to handle user account deletion
+router.post(
+  "/users/deleteUserAccount",
+  utilities.checkLogin,
+  utilities.checkIsAdmin,
+  accountController.deleteUserAccount
+)
+
 module.exports = router;

@@ -1,0 +1,37 @@
+<% if (title) { %>
+  <h1>
+    <%= title %>
+  </h1>
+  <% } else { res.redirect('/') } %>
+
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+<form id="userAdministrationDeleteForm" action="/account/users/deleteUserAccount" method="post">
+  <fieldset>
+    <legend>Confirm Deletion - The deletion is permanent.</legend>
+    <label for="firstname">First Name:</label>
+    <input type="text" id="firstname" name="account_firstname" readonly value="<%= locals.account_firstname %>">
+
+    <label for="lastname">Last Name:</label>
+    <input type="text" id="lastname" name="account_lastname" readonly value="<%= locals.account_lastname %>">
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="account_email" readonly value="<%= locals.account_email %>">
+
+    <label for="role">Role:</label>
+    <input type="text" id="role" name="account_type" readonly value="<%= locals.account_type %>">
+
+    <input type="hidden" name="account_id"
+    <% if(locals.account_id) { %> value="<%= locals.account_id %>"
+    <% } %>>
+  </fieldset>
+  <button type="submit">Delete User</button>
+</form>

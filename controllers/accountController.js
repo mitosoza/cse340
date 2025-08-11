@@ -248,4 +248,130 @@ async function updatePassword(req, res) {
   }
 }
 
-module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement, buildUpdateAccount, updateAccount, updatePassword}
+/* ***************************
+ *  Build Users Admin view
+ * ************************** */
+async function buildUsersAdmin(req, res) {
+  let nav = await utilities.getNav()
+  const account_id = parseInt(req.params.account_id)
+  const usersData = await accountModel.getAllUsers()
+  res.render("account/usersAdministration", {
+    title: "Users Administration",
+    nav,
+    errors: null,
+    users: usersData,
+    account_id
+  })
+}
+
+/* ***************************
+ *  Build Users Admin Edit view
+ * ************************** */
+async function buildUsersAdminEdit(req, res) {
+  let nav = await utilities.getNav()
+  const account_id = parseInt(req.params.account_id)
+  const userData = await accountModel.getUserById(account_id)
+  const roleSelect = await utilities.buildRoleSelect(userData.account_type)
+  res.render("account/usersAdministrationEdit", {
+    title: "Edit User",
+    nav,
+    errors: null,
+    account_id: userData.account_id,
+    account_firstname: userData.account_firstname,
+    account_lastname: userData.account_lastname,
+    account_email: userData.account_email,
+    roleSelect
+  })
+}
+
+/* ****************************************
+ *  Process User Account Edit
+ **************************************** */
+async function editUserAccount(req, res) {
+  let nav = await utilities.getNav()
+  const { account_id, account_firstname, account_lastname, account_email, account_type } = req.body
+
+  const updatedResult = await accountModel.editUserAccount(
+    account_id,
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_type
+  )
+
+  if (updatedResult) {
+    req.flash("notice", "Congratulations! user information has been updated.")
+    res.status(201).render("account/accountManagement", {
+      title: "Account Management",
+      nav,
+      errors: null,
+    })
+  }
+  else {
+    const roleSelect = await utilities.buildRoleSelect(account_type)
+    req.flash("notice", "Sorry, the account update failed.")
+    res.status(400).render("account/usersAdministrationEdit", {
+      title: "Edit User",
+      nav,
+      errors: null,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_type,
+      roleSelect
+    })
+  }
+}
+
+
+/* ********************************
+ *  Build User Account Delete view
+ ******************************** */
+async function buildUsersAdminDelete(req, res) {
+  let nav = await utilities.getNav()
+  const account_id = parseInt(req.params.account_id)
+  const userData = await accountModel.getUserById(account_id)
+  res.render("account/usersAdministrationDelete", {
+    title: "Delete User",
+    nav,
+    errors: null,
+    account_id: userData.account_id,
+    account_firstname: userData.account_firstname,
+    account_lastname: userData.account_lastname,
+    account_email: userData.account_email,
+    account_type: userData.account_type
+  })
+}
+
+/* ********************************
+ *  Process User Account Deletion
+ ******************************** */
+async function deleteUserAccount(req, res) {
+  let nav = await utilities.getNav()
+  const { account_id, account_firstname, account_lastname, account_email, account_type } = req.body
+  const deleteResult = await accountModel.deleteUserAccount(account_id)
+
+  if (deleteResult) {
+    req.flash("notice", "User account has been deleted.")
+    res.status(200).render("account/accountManagement", {
+      title: "Account Management",
+      nav,
+      errors: null,
+    })
+  } else {
+    req.flash("notice", "Sorry, the account deletion failed.")
+    res.status(500).render("account/usersAdministrationDelete", {
+      title: "Delete User",
+      nav,
+      errors: null,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_type
+    })
+  }
+}
+
+module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement, buildUpdateAccount, updateAccount, updatePassword, buildUsersAdmin, buildUsersAdminEdit, editUserAccount, buildUsersAdminDelete, deleteUserAccount}

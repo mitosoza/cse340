@@ -1,0 +1,39 @@
+<% if (title) { %>
+  <h1>
+    <%= title %>
+  </h1>
+  <% } else { res.redirect('/') } %>
+
+    <%- messages() %>
+
+    <% if (users && users.length) { %>
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Role</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users.forEach((user, index) => { %>
+            <tr>
+              <td><%= user.account_firstname %></td>
+              <td><%= user.account_lastname %></td>
+              <td><%= user.account_type %></td>
+              <td><%= user.account_email %></td>
+              <td>
+                <% if (locals.accountData && locals.accountData.account_id !== user.account_id) { %>
+                  <a href="/account/users/edit/<%= user.account_id %>">Edit</a>
+                  <a href="/account/users/delete/<%= user.account_id %>">Delete</a>
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } else { %>
+      <p>No users found.</p>
+    <% } %>

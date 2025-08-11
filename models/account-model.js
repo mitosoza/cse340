@@ -79,4 +79,66 @@ async function updatePassword(account_id, account_password) {
   }
 }
 
-module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, getAccountDataById, updateAccount, updatePassword}
+/* *****************************
+* Get all users
+* ***************************** */
+async function getAllUsers() {
+  try {
+    const result = await pool.query('SELECT * FROM account ORDER BY account_firstname ASC')
+    return result.rows
+  } catch (error) {
+    return error.message
+  }
+}
+
+/* *****************************
+* Get user by ID
+* ***************************** */
+async function getUserById(account_id) {
+  try {
+    const result = await pool.query('SELECT account_id, account_firstname, account_lastname, account_email, account_type FROM account WHERE account_id = $1', [account_id])
+    return result.rows[0]
+  } catch (error) {
+    return error.message
+  }
+}
+
+/* ****************************************
+ * Get all roles
+ **************************************** */
+async function getAllRoles() {
+  try {
+    const result = await pool.query('SELECT DISTINCT account_type FROM account')
+    return result.rows.map(row => row.account_type)
+  } catch (error) {
+    return error.message
+  }
+}
+
+/* ****************************************
+ * Edit User Account
+ **************************************** */
+async function editUserAccount(account_id, account_firstname, account_lastname, account_email, account_type) {
+  try {
+    const sql = "UPDATE account SET account_firstname = $1, account_lastname = $2, account_email = $3, account_type = $4 WHERE account_id = $5 RETURNING *"
+    const result = await pool.query(sql, [account_firstname, account_lastname, account_email, account_type, account_id])
+    return result.rows[0]
+  } catch (error) {
+    return error.message
+  }
+}
+
+/* ****************************************
+ * Delete User Account
+ **************************************** */
+async function deleteUserAccount(account_id) {
+  try {
+    const sql = "DELETE FROM account WHERE account_id = $1 RETURNING *"
+    const result = await pool.query(sql, [account_id])
+    return result
+  } catch (error) {
+    return error.message
+  }
+}
+
+module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, getAccountDataById, updateAccount, updatePassword, getAllUsers, getUserById, getAllRoles, editUserAccount, deleteUserAccount}

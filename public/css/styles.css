@@ -230,6 +230,39 @@ nav ul li a {
   padding: 0.25rem 0.5rem;
 }
 
+/* Account Management */
+#accountManagement {
+  margin-left: 1rem;
+}
+
+#accountManagement h3 {
+  margin-top: 3rem;
+}
+
+/* User Administration */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .5rem;
+}
+
+.user-table th,
+.user-table td {
+  border-bottom: 1px solid var(--secondary-color-five);
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.user-table th {
+  border: none;
+  background: var(--primary-color-one);
+  color: white;
+}
+
+.user-table td a {
+  padding-right: 1rem;
+}
+
 /* Forms */
 .notice {
   color: red
@@ -240,7 +273,9 @@ nav ul li a {
 #newClassificationForm,
 #newVehicleForm,
 #editVehicleForm,
-#deleteVehicleForm {
+#deleteVehicleForm,
+#userAdministrationEditForm,
+#userAdministrationDeleteForm {
   display: block;
   gap: 0.5rem;
   margin: 1rem 0;
@@ -322,7 +357,7 @@ footer {
   font-size: 0.6rem;
 }
 
-/* Bigger Screens */
+/* Bigger Screens ****************************/
 @media (min-width: 800px) {
   body {
     font-size: 0.85rem;
@@ -441,13 +476,22 @@ footer {
     max-width: 300px;
   }
 
+  /* Users Administration */
+  .user-table {
+    width: 90%;
+    font-size: 1rem;
+    margin: 0 auto;
+  }
+
   /* Forms */
   #registerForm,
   #loginForm,
   #newClassificationForm,
   #newVehicleForm,
   #editVehicleForm,
-  #deleteVehicleForm {
+  #deleteVehicleForm,
+  #userAdministrationEditForm,
+  #userAdministrationDeleteForm {
     width: 50%;
     margin: 0 auto;
   }

@@ -223,4 +223,30 @@ validate.checkPasswordData = async (req, res, next) => {
   next()
 }
 
+/* ******************************
+ * Check edit user account data and return errors or continue
+ * ***************************** */
+validate.checkEditUserData = async (req, res, next) => {
+  const { account_id,account_firstname, account_lastname, account_email, account_type } = req.body
+  const roleSelect = await utilities.buildRoleSelect(account_type)
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    res.render("account/usersAdministrationEdit", {
+      errors,
+      title: "Edit User",
+      nav,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_type,
+      roleSelect
+    })
+    return
+  }
+  next()
+}
+
 module.exports = validate

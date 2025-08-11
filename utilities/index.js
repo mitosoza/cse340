@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const accountModel = require("../models/account-model")
 const Util = {}
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
@@ -121,6 +122,19 @@ Util.checkAccountType = (req, res, next) => {
 }
 
 /* ****************************************
+ * Middleware to check account type for user administration
+ **************************************** */
+Util.checkIsAdmin = (req, res, next) => {
+  if (res.locals.accountData &&
+    (res.locals.accountData.account_type === "Admin")) {
+    next()
+  } else {
+    req.flash("notice", "Access Denied - Please log in with appropriate privileges.")
+    return res.redirect("/account/login")
+  }
+}
+
+/* ****************************************
  *  Check Login
  * ************************************ */
 Util.checkLogin = (req, res, next) => {
@@ -145,6 +159,23 @@ Util.buildClassificationList = async function (selectedId) {
       selectList += ' selected'
     }
     selectList += '>' + classification.classification_name + '</option>'
+  })
+  selectList += '</select>'
+  return selectList
+}
+
+/* ****************************************
+ *  Build the role select list
+ **************************************** */
+Util.buildRoleSelect = async function (selectedRole) {
+  const getRoles = await accountModel.getAllRoles()
+  let selectList = '<select id="roleList" name="account_type">'
+  getRoles.forEach(role => {
+    selectList += '<option value="' + role + '"'
+    if (role === selectedRole) {
+      selectList += ' selected'
+    }
+    selectList += '>' + role + '</option>'
   })
   selectList += '</select>'
   return selectList
